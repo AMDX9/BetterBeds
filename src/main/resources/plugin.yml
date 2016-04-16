@@ -25,3 +25,6 @@ permissions:
    betterbeds.ignore:
       description: Users with this permission don't get calculated when they are online.
       default: op
+   betterbeds.optional:
+      description: Users with this permission are not required to sleep but can participate in the count
+      default: false

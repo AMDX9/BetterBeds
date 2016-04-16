@@ -98,6 +98,7 @@ public class BetterBeds extends JavaPlugin implements Listener {
 		if(event.isCancelled() 
 				|| event.getPlayer().hasPermission("betterbeds.ignore") 
 				|| !event.getPlayer().hasPermission("betterbeds.sleep")
+                                || (event.getPlayer().hasPermission("betterbeds.optional") && !event.getPlayer().isSleeping())
 				|| this.transitionTask != 0)
 			return;
 
@@ -110,7 +111,7 @@ public class BetterBeds extends JavaPlugin implements Listener {
 				this.getLogger().info("There is a ghost online, players can't sleep now!");
 				return;
 			}
-			if(!p.hasPermission("betterbeds.ignore"))
+			if(!p.hasPermission("betterbeds.ignore") || (p.hasPermission("betterbeds.optional") && p.isSleeping()))
 				calculatedPlayers++;
 		}
 		
@@ -144,7 +145,7 @@ public class BetterBeds extends JavaPlugin implements Listener {
             if(world.equals(p.getWorld())) {
                 if (p.hasPermission("betterbeds.ghost") && !p.isSleeping())
                     return false;
-                if (p.hasPermission("betterbeds.sleep") && !p.hasPermission("betterbeds.ignore"))
+                if (p.hasPermission("betterbeds.sleep") && !p.hasPermission("betterbeds.ignore") && (p.hasPermission("betterbeds.optional") && p.isSleeping()))
                     calculatedPlayers++;
             }
 		}		
@@ -306,7 +307,7 @@ public class BetterBeds extends JavaPlugin implements Listener {
 	private int countQualifyingPlayers(World world) {
 		int calculatedPlayers = 0;
 		for(Player p : getServer().getOnlinePlayers())
-			if(world.equals(p.getWorld()) && !p.hasPermission("betterbeds.ignore") && p.hasPermission("betterbeds.sleep"))
+			if(world.equals(p.getWorld()) && !p.hasPermission("betterbeds.ignore") && (p.hasPermission("betterbeds.optional") && p.isSleeping()) && p.hasPermission("betterbeds.sleep"))
 				calculatedPlayers ++;
 		return calculatedPlayers;
 	}
