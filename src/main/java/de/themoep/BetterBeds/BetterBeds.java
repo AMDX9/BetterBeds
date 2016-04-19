@@ -149,9 +149,10 @@ public class BetterBeds extends JavaPlugin implements Listener {
                 if (p.hasPermission("betterbeds.ghost") && !p.isSleeping()) {
                     return false;
                 }
-                if (p.hasPermission("betterbeds.sleep")
-                        && (!p.hasPermission("betterbeds.ignore")
-                        || (p.hasPermission("betterbeds.optional") && playerList.contains(p.getUniqueId())))) {
+                if(p.hasPermission("betterbeds.ignore") || (p.hasPermission("betterbeds.optional") && !playerList.contains(p.getUniqueId()))){
+                    continue;
+                }
+                if (p.hasPermission("betterbeds.sleep")){
                     calculatedPlayers++;
                 }
             }
